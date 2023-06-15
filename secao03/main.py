@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi import status
-from fastapi.responses import JSONResponse
+from fastapi import Query
 from fastapi import Response
 from models import Curso
+from typing import Optional
 
 app = FastAPI()
 
@@ -60,6 +61,16 @@ async def delete_curso(curso_id: int):
         return Response(status_code=status.HTTP_204_NO_CONTENT)
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Curso não encontrado")
+
+@app.get('/calculadora')
+async def calculo(
+    a: int = Query(default=None, gt=5), 
+    b: int = Query(default=None, lt=10), 
+    c: Optional[int] = 0
+):
+    soma = a + b + c
+    return {"resultado" : soma}
+
 
 if __name__ == '__main__':
     import uvicorn
