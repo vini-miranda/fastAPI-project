@@ -3,6 +3,7 @@ from fastapi import HTTPException
 from fastapi import status
 from fastapi import Query
 from fastapi import Response
+from fastapi import Header
 from models import Curso
 from typing import Optional
 
@@ -66,9 +67,11 @@ async def delete_curso(curso_id: int):
 async def calculo(
     a: int = Query(default=None, gt=5), 
     b: int = Query(default=None, lt=10), 
-    c: Optional[int] = 0
+    c: Optional[int] = 0,
+    x_geek: str = Header(default=None)
 ):
     soma = a + b + c
+    print(f'X_GEEK: {x_geek}')
     return {"resultado" : soma}
 
 
